@@ -71,23 +71,23 @@ class DiskWidget(BaseWidget):
         result = os.popen("WMIC LOGICALDISK GET Name,Size,FreeSpace").read() # WMIC is deprecated, but all other options require elevation
         for line in result.split("\n"):
             if self._volume_label in line:
-                used_space = int(line.split()[0].strip())
+                free_space = int(line.split()[0].strip())
                 total_space = int(line.split()[2].strip())
 
-        if used_space and total_space:
+        if free_space and total_space:
             return {
                 "total": {
                     'mb': total_space / 1024,
                     'gb': total_space / 1024**3
                 },
-                "used": {
-                    'mb': used_space / 1024,
-                    'gb': used_space / 1024**3,
-                    'percent': (used_space / total_space) * 100
-                },
                 "free": {
-                    'mb': (total_space - used_space) / 1024,
-                    'gb': (total_space / 1024**3) - (used_space / 1024**3),
-                    'percent': ((total_space - used_space) / total_space) * 100
+                    'mb': free_space / 1024,
+                    'gb': free_space / 1024**3,
+                    'percent': (free_space / total_space) * 100
+                },
+                "used": {
+                    'mb': (total_space - free_space) / 1024,
+                    'gb': (total_space / 1024**3) - (free_space / 1024**3),
+                    'percent': ((total_space - free_space) / total_space) * 100
                 }
             }

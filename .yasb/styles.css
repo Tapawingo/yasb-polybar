@@ -9,9 +9,16 @@
 .bar {
     background: rgba(29, 32, 33, 1);
     padding: 0 10px;
+    padding-left: 0px;
     border-radius: 5px;
     margin: 3px 0 3px 0px;
+    overflow: hidden;
 }
+
+.container-left {
+    padding-left: 0px;
+    border-radius: 5px;
+  }
 
 .container-right .widget {
   margin: 2px;
@@ -64,8 +71,24 @@
   margin: 2px;
 }
 
-.komorebi-active-layout .label {
-  color: rgb(240, 198, 116);
-  margin: -4px 2px 2px 8px;
-  font-family: Hack;
+.windows-desktops {
+    margin-left: 4px;
+}
+.ws-btn, .ws-btn-focused {
+    font-family: 'Meslo LGLDZ Nerd Font Mono';
+    background-color: transparent;
+    border: 0 solid rgba(168, 153, 132, 0.4); /* For some reason border-bottom is not shown if this is not set */
+    color: #C5C8C6;
+    padding: 0 6px;
+    height: 100%;
+}
+
+.ws-btn:hover {
+    background-color: rgba(255, 255, 255, 0.107);
+}
+
+.ws-btn-focused {
+    background-color: rgba(255, 255, 255, 0.107);
+    border-bottom: 3px solid rgb(240, 198, 116);
+    border-top: 3px solid transparent;
 }

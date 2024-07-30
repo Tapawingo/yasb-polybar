@@ -11,3 +11,4 @@ tzlocal==4.2
 watchdog==2.1.9
 winsdk==1.0.0b6
 pycaw==5.9.1
+pyvda==0.3.2

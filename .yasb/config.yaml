@@ -14,7 +14,7 @@ bars:
       acrylic: false
       dark: false
     window_flags:
-      always_on_top: true
+      always_on_top: false 
       windows_app_bar: true
     dimensions:
       width: "100%"
@@ -25,11 +25,16 @@ bars:
       bottom: 0
       right: 3
     widgets:
-      left:   ["open_startmenu", "active_window"]
+      left:   ["virtual_desktops", "active_window"]
       center: []
       right:  ["disk", "separator", "cpu", "separator", "memory", "separator", "volume", "separator", "wifi", "separator", "battery", "separator", "clock"]
 
 widgets:
+  virtual_desktops:
+    type: "yasb.desktops.WorkspaceWidget"
+    options:
+      hide_empty_workspaces: False
+
   active_window:
     type: "yasb.active_window.ActiveWindowWidget"
     options:
@@ -58,6 +63,8 @@ widgets:
       label: "<span style=\"font-family: 'Meslo LGLDZ Nerd Font Mono'\">CPU <span style=\"color: #C5C8C6\">{info[percent][total]:.0f}%</span></span>"
       label_alt: "<span style=\"font-family: 'Meslo LGLDZ Nerd Font Mono'\">CPU: <span style=\"color: #C5C8C6\">{info[percent][total]}% | freq: {info[freq][current]:.2f} Mhz</span></span>"
       update_interval: 500
+      callbacks:
+          on_right: "exec cmd /c Taskmgr"
 
   memory:
     type: "yasb.memory.MemoryWidget"
@@ -103,7 +110,7 @@ widgets:
         update_interval: 100
         callbacks:
           on_middle: "do_nothing"
-          on_right: "exec cmd.exe /c start ms-settings:network"
+          on_right: "exec cmd.exe /c start sndvol.exe"
 
   traffic:
     type: "yasb.traffic.TrafficWidget"
@@ -126,45 +133,6 @@ widgets:
         run_once: true
       callbacks:
         on_left: exec cscript /B C:\Users\Eirik\.yasb\scripts\open_startmenu.vbs
-
-  explorer_button:
-    type: "yasb.custom.CustomWidget"
-    options:
-      label: "\uf07c"
-      label_alt: "Explorer"
-      class_name: "explorer-widget"
-      exec_options:
-        run_once: true
-      callbacks:
-        on_left: "exec explorer.exe"
-        on_right: "toggle_label"
-
-  ip_info:
-    type: "yasb.custom.CustomWidget"
-    options:
-      label: "<span style=\"color: #C5C8C6; font-family: 'Meslo LGLDZ Nerd Font Mono'\">{data[ip]}</span></span>"
-      label_alt: "<span style=\"color: #C5C8C6; font-family: 'Meslo LGLDZ Nerd Font Mono'\">{data[city]}, {data[region]}, [{data[country]}]</span></span>"
-      class_name: "ip-info-widget"
-      exec_options:
-        run_cmd: "curl.exe https://ipinfo.io"
-        run_interval: 120000                                        # every 5 minutes
-        return_format: "json"
-      callbacks:
-        on_left: "toggle_label"
-        on_middle: "exec cmd /c ncpa.cpl"                           # open network settings
-        on_right: "exec cmd /c start https://ipinfo.io/{data[ip]} " # open ipinfo in browser
-
-  weather:
-    type: "yasb.custom.CustomWidget"
-    options:
-      label: "\uf0c2 {data[current_condition][0][temp_C]}\u00b0c"
-      label_alt: "\uf0c2 {data[current_condition][0][weatherDesc][0][value]}"
-      class_name: "weather-widget"
-      exec_options:
-        run_cmd: "curl.exe  wttr.in/Vancouver?format=j1"
-        # run every hour
-        run_interval: 3600000
-        return_format: "json"
 
   separator:
     type: "yasb.custom.CustomWidget"
